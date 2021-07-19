@@ -249,4 +249,70 @@ submission = test[['id','label']]
 submission.to_csv('sub_svc_tfidf.csv', index=False)
 
 
+#Random Forest
+#Bag-of-features
+
+rf = RandomForestClassifier(n_estimators=400, random_state=11).fit(xtrain_bow, ytrain)
+
+prediction = rf.predict(xvalid_bow)
+print("Feature Extraction Technique: Bag-of-Words    Model-building Algorithm: Random Forest  ")
+print("F1 Score:",f1_score(yvalid, prediction_int))
+print("Accuracy:" ,100*accuracy_score(yvalid, prediction_int),"%")
+print("--------------------------------------------------")
+
+test_pred = rf.predict(test_bow)
+test['label'] = test_pred
+submission = test[['id','label']]
+submission.to_csv('sub_rf_bow.csv', index=False)
+
+
+#Random Forest
+#TF-IDF
+
+rf = RandomForestClassifier(n_estimators=400, random_state=11).fit(xtrain_tfidf, ytrain)
+
+prediction = rf.predict(xvalid_tfidf)
+print("Feature Extraction Technique: TF-IDF    Model-building Algorithm: Random Forest  ")
+print("F1 Score:",f1_score(yvalid, prediction_int))
+print("Accuracy:" ,100*accuracy_score(yvalid, prediction_int),"%")
+print("--------------------------------------------------")
+
+test_pred = rf.predict(test_tfidf)
+test['label'] = test_pred
+submission = test[['id','label']]
+submission.to_csv('sub_rf_tfidf.csv', index=False)
+
+
+
+#XGBoost
+#Bag-of-features
+
+xgb_model = XGBClassifier(max_depth=6, n_estimators=1000).fit(xtrain_bow, ytrain)
+prediction = xgb_model.predict(xvalid_bow)
+print("Feature Extraction Technique: Bag-of-Words    Model-building Algorithm: XGBoost  ")
+print("F1 Score:",f1_score(yvalid, prediction_int))
+print("Accuracy:" ,100*accuracy_score(yvalid, prediction_int),"%")
+print("--------------------------------------------------")
+
+test_pred = xgb_model.predict(test_bow)
+test['label'] = test_pred
+submission = test[['id','label']]
+submission.to_csv('sub_xgb_bow.csv', index=False)
+
+#XGBoost
+#TF-IDF
+xgb = XGBClassifier(max_depth=6, n_estimators=1000).fit(xtrain_tfidf, ytrain)
+
+prediction = xgb.predict(xvalid_tfidf)
+print("Feature Extraction Technique: TF-IDF    Model-building Algorithm: XGBoost  ")
+print("F1 Score:",f1_score(yvalid, prediction_int))
+print("Accuracy:" ,100*accuracy_score(yvalid, prediction_int),"%")
+print("--------------------------------------------------")
+
+test_pred = xgb_model.predict(test_tfidf)
+test['label'] = test_pred
+submission = test[['id','label']]
+submission.to_csv('sub_xgb_tfidf.csv', index=False)
+
+
 
